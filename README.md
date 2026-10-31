@@ -2,6 +2,8 @@
 
 # FireflyLoveSite
 
+[![CI](https://github.com/FireflyDevs/FireflyLoveSite/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/FireflyDevs/FireflyLoveSite/actions/workflows/ci.yml)
+
 一个尚在筹备中的非官方《崩坏：星穹铁道》流萤主题同好网站。
 
 [项目域名](https://xn--qzw410c.love) · [开发预览](https://dev.xn--qzw410c.love) · [GitHub 仓库](https://github.com/FireflyDevs/FireflyLoveSite) · [提交 Issue](https://github.com/FireflyDevs/FireflyLoveSite/issues) · [加入 QQ 群](https://qm.qq.com/q/guZg2hdNE4)
