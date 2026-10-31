@@ -88,8 +88,9 @@ npm run typecheck
 
 1. 从 `dev` 创建功能分支，提交 Pull Request 到 `dev`
 2. GitHub Actions 自动运行 TypeScript 类型检查、首页和跳转检查
-3. 检查通过，并至少获得 1 位维护者批准后，自动压缩合并到 `dev`
-4. 合并后服务器自动部署到 https://dev.流萤.love
+3. 团队成员发起的 PR 在检查通过后自动压缩合并到 `dev`
+4. 外部贡献者的 PR 会先运行检查，由维护者审核后合并
+5. 合并后服务器自动部署到 https://dev.流萤.love
 
 `main` 只接收经过验证的发布内容，功能开发请统一提交到 `dev`。
 
@@ -170,6 +171,7 @@ FireflyLoveSite/
 ### PR 注意事项
 
 - PR 目标分支必须是 `dev`，不要直接提交到 `main`
+- 团队成员 PR 在 CI 通过后自动合并；外部 PR 会等待维护者审核
 - 一次 PR 尽量只做一件事，保持改动清晰
 - 不提交密钥、Token、服务器密码等敏感信息
 - 新功能请同步更新 README 或相关文档

@@ -12,10 +12,13 @@ permissions:
 jobs:
   enable-auto-merge:
     name: enable-auto-merge
-    if: github.event.pull_request.draft == false && github.event.pull_request.base.ref == 'dev'
+    if: >-
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.base.ref == 'dev' &&
+      contains(fromJson('["MEMBER","OWNER","COLLABORATOR"]'), github.event.pull_request.author_association)
     runs-on: ubuntu-latest
     steps:
-      - name: Enable auto-merge after checks and approval
+      - name: Enable auto-merge for trusted team PRs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
