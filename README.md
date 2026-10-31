@@ -4,7 +4,7 @@
 
 一个尚在筹备中的非官方《崩坏：星穹铁道》流萤主题同好网站。
 
-[项目域名](https://xn--qzw410c.love) · [GitHub 仓库](https://github.com/FireflyDevs/FireflyLoveSite) · [提交 Issue](https://github.com/FireflyDevs/FireflyLoveSite/issues) · [加入 QQ 群](https://qm.qq.com/q/guZg2hdNE4)
+[项目域名](https://xn--qzw410c.love) · [开发预览](https://dev.xn--qzw410c.love) · [GitHub 仓库](https://github.com/FireflyDevs/FireflyLoveSite) · [提交 Issue](https://github.com/FireflyDevs/FireflyLoveSite/issues) · [加入 QQ 群](https://qm.qq.com/q/guZg2hdNE4)
 
 </div>
 
@@ -42,7 +42,8 @@
 | --- | --- |
 | 页面 | HTML5 + CSS3 + 原生 JavaScript |
 | 服务端 | TypeScript + Node.js（原生 HTTP，无运行时依赖） |
-| 部署 | Nginx 反向代理 + systemd |
+| 部署 | Nginx 反向代理 + systemd（生产站 / dev 预览站两套） |
+| CI/CD | GitHub Actions：类型检查 + 页面/跳转检查 + dev 自动合并、自动部署 |
 | 跳转 | `redirects.json` 配置，支持 301/302，保存后自动重载 |
 
 当前服务器使用 Node.js 26，可以直接运行 `.ts` 文件，无需额外编译。
@@ -76,10 +77,27 @@ npm install
 npm run typecheck
 ```
 
+## 分支与自动部署
+
+| 分支 | 用途 | 地址 |
+| --- | --- | --- |
+| `main` | 生产分支 | https://流萤.love |
+| `dev` | 开发集成分支，所有 PR 的目标分支 | https://dev.流萤.love |
+
+工作流程：
+
+1. 从 `dev` 创建功能分支，提交 Pull Request 到 `dev`
+2. GitHub Actions 自动运行 TypeScript 类型检查、首页和跳转检查
+3. 检查通过，并至少获得 1 位维护者批准后，自动压缩合并到 `dev`
+4. 合并后服务器自动部署到 https://dev.流萤.love
+
+`main` 只接收经过验证的发布内容，功能开发请统一提交到 `dev`。
+
 ## 目录结构
 
 ```text
 FireflyLoveSite/
+├── .github/              # CI 与自动合并工作流
 ├── firefly.html          # 默认页面
 ├── server.ts             # TypeScript 网站服务
 ├── redirects.json        # 301/302 跳转规则
@@ -98,9 +116,11 @@ FireflyLoveSite/
 ### 提交 PR
 
 1. Fork 本仓库
-2. 从 `main` 创建分支：
+2. 从 `dev` 创建分支：
 
    ```bash
+   git checkout dev
+   git pull origin dev
    git checkout -b feature/your-feature
    ```
 
@@ -108,6 +128,7 @@ FireflyLoveSite/
 
    ```bash
    node server.ts
+   pnpm typecheck
    ```
 
 4. 提交并推送：
@@ -118,7 +139,7 @@ FireflyLoveSite/
    git push origin feature/your-feature
    ```
 
-5. 在 GitHub 提交 Pull Request，说明修改内容、测试方式和相关 Issue
+5. 在 GitHub 提交 Pull Request，**目标分支选择 `dev`**，说明修改内容、测试方式和相关 Issue
 
 较大的功能建议先开 Issue 讨论，避免重复开发或方向不一致。
 
@@ -148,11 +169,13 @@ FireflyLoveSite/
 
 ### PR 注意事项
 
+- PR 目标分支必须是 `dev`，不要直接提交到 `main`
 - 一次 PR 尽量只做一件事，保持改动清晰
 - 不提交密钥、Token、服务器密码等敏感信息
 - 新功能请同步更新 README 或相关文档
 - 图片和游戏素材请确认来源与授权，尊重原作者和官方版权
 - 提交前至少运行一次 `node server.ts`，确认首页和跳转正常
+- CI 会运行 `pnpm typecheck` 和 `.github/scripts/ci-check.sh`，请确保本地也能通过
 
 ## 跳转配置
 
