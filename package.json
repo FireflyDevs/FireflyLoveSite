@@ -1,0 +1,18 @@
+{
+  "name": "firefly-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "流萤.love 的 Node.js 网站与可配置 301/302 跳转",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.7.0"
+  }
+}

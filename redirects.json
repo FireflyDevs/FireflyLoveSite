@@ -1,0 +1,26 @@
+{
+  "defaultStatus": 302,
+  "preserveQuery": true,
+  "rules": [
+    {
+      "from": "/image.Firefly",
+      "to": "https://img.流萤.love/image.Firefly"
+    },
+    {
+      "from": "/like.Firefly",
+      "to": "https://img.流萤.love/like.Firefly"
+    },
+    {
+      "from": "/look.html",
+      "to": "https://img.流萤.love/look.html"
+    },
+    {
+      "from": "/pixiv.Firefly",
+      "to": "https://img.流萤.love/pixiv.Firefly"
+    },
+    {
+      "from": "/thank.html",
+      "to": "https://img.流萤.love/thank.html"
+    }
+  ]
+}
