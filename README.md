@@ -2,8 +2,6 @@
 
 # FireflyLoveSite
 
-**流萤.love — 愿你也能，找到属于自己的光。**
-
 一个尚在筹备中的非官方《崩坏：星穹铁道》流萤主题同好网站。
 
 [项目域名](https://xn--qzw410c.love) · [GitHub 仓库](https://github.com/FireflyDevs/FireflyLoveSite) · [提交 Issue](https://github.com/FireflyDevs/FireflyLoveSite/issues) · [加入 QQ 群](https://qm.qq.com/q/guZg2hdNE4)
@@ -14,13 +12,13 @@
 
 ## 关于这个项目
 
-`FireflyLoveSite` 是 **流萤.love** 的网站源码，由 [FireflyDevs（流萤开发团队）](https://github.com/FireflyDevs) 维护。它面向所有喜欢流萤、喜欢《崩坏：星穹铁道》的玩家，希望做成一个友善、用心、可以长期维护的同好空间。
+`FireflyLoveSite` 是 **流萤.love** 的网站源码，由 [FireflyDevs（流萤的秘密基地）](https://github.com/FireflyDevs) 维护。它面向所有喜欢流萤、喜欢《崩坏：星穹铁道》的玩家，希望做成一个友善、用心、可以长期维护的同好空间。
 
 目前网站还在筹备和持续完善中。页面里的流萤主题首页、角色内容、壁纸与同人内容入口已经搭好基础，接下来会逐步补充角色档案、图集、视频、资料库和更多社区内容。
 
-> 「我会把这份温柔，一直带给你。」
+> 「不、不好意思！请帮帮我……」
 >
-> 愿你也能，找到属于自己的光。
+> 「保护美少女我义不容辞！」
 
 这是一个**非官方同人项目**，与米哈游 / HoYoverse 官方无关。
 
@@ -95,6 +93,7 @@ FireflyLoveSite/
 ## 参与贡献
 
 **所有人都可以参与这个项目。** 无论你是开发者、设计师、写作者、测试者，还是只想帮忙整理资料，都欢迎加入。
+**当前项目中的内容并不是最终目标**，可以当成一个占位，用来显示招募信息，没有开发方向限制。
 
 ### 提交 PR
 
