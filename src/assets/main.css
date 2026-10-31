@@ -1,0 +1,248 @@
+/* ============================================================
+   自定义字体声明
+   字体文件由原 1.html 内联的 data:font/woff2;base64 拆出，
+   @font-face 与下方 :root 的 --f-* 变量一一对应。
+   ============================================================ */
+
+@font-face {
+  font-family: 'FFScript';
+  src: url('./fonts/FFScript.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FFDisplay';
+  src: url('./fonts/FFDisplay.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FFSerifCN';
+  src: url('./fonts/FFSerifCN.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FFKai';
+  src: url('./fonts/FFKai.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #050b18;
+  --bg-2: #07101f;
+  --panel-a: rgba(19, 35, 63, 0.8);
+  --panel-b: rgba(9, 20, 39, 0.88);
+  --line: rgba(150, 190, 245, 0.17);
+  --line-2: rgba(150, 190, 245, 0.34);
+  --line-3: rgba(196, 222, 255, 0.55);
+  --ink: #eaf2ff;
+  --muted: #9db1d0;
+  --dim: #7288ab;
+  --accent: #a9cdff;
+  --accent-2: #6ea8ff;
+  --gold: #ffd79a;
+  --pink: #ffb4d2;
+  --shell: 1447px;
+  --header-h: 65px;
+  --radius: 16px;
+  --glow: 0 0 24px rgba(130, 180, 255, 0.3);
+  --f-ui:
+    'Inter', 'HarmonyOS Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+    'Source Han Sans SC', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --f-script: 'FFScript', 'Great Vibes', 'Segoe Script', 'Brush Script MT', cursive;
+  --f-display: 'FFDisplay', 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --f-serif-cn:
+    'FFSerifCN', 'Songti SC', 'STSong', 'Source Han Serif SC', 'Noto Serif CJK SC', 'Noto Serif SC',
+    SimSun, serif;
+  --f-kai: 'FFKai', 'LXGW WenKai', 'Kaiti SC', 'STKaiti', KaiTi, '楷体', 'Klee One', serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+  font-family: var(--f-ui);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background:
+    radial-gradient(1200px 700px at 12% -8%, rgba(48, 88, 158, 0.22), transparent 62%),
+    radial-gradient(1000px 620px at 96% 34%, rgba(84, 72, 168, 0.16), transparent 60%),
+    radial-gradient(900px 600px at 50% 118%, rgba(40, 86, 150, 0.14), transparent 62%),
+    linear-gradient(180deg, #050b18, #07101f 46%, #050b18);
+  background-attachment: fixed;
+}
+
+button,
+a,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  border: 0;
+  background: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+svg {
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: rgba(126, 175, 255, 0.32);
+}
+
+/* ---------- 点击涟漪（跨组件共用） ---------- */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, rgba(190, 220, 255, 0.5), rgba(150, 195, 255, 0) 70%);
+  animation: ripple-out 0.62s ease-out forwards;
+}
+
+@keyframes ripple-out {
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ---------- 开发窗口打开时锁定页面滚动 ----------
+   作用在 <body> 上，scoped 样式够不到，只能放在全局表中。
+   见 src/components/layout/DevModal.vue 与 src/composables/useDevModal.ts。 */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* ---------- 入场动画（跨组件共用） ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- 布局与显隐工具类 ---------- */
+.shell {
+  width: min(var(--shell), calc(100% - 88px));
+  margin-inline: auto;
+}
+
+/* 桌面端 / 移动端专用内容，在 860px 断点处互换 */
+.d-only {
+  display: inline;
+}
+
+.m-only {
+  display: none;
+}
+
+/* ---------- 降低动效偏好 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 1240px) {
+  /* 中屏收窄两侧留白 */
+  .shell {
+    width: calc(100% - 56px);
+  }
+}
+
+@media (max-width: 860px) {
+  .d-only {
+    display: none;
+  }
+
+  .m-only {
+    display: inline;
+  }
+
+  /* 顶栏在小屏改为 fixed 浮层，正文需要让出高度；
+     底部预留安全区，避免内容被 iOS 手势条遮挡 */
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+
+  /* 页面容器为 fixed 顶栏让出 54px 高度，避免首屏内容被遮 */
+  .page {
+    padding-top: 54px;
+  }
+
+  /* 小屏铺满，内边距交给各区块自行控制 */
+  .shell {
+    width: 100%;
+  }
+}
+
+/* ---------- 页面容器 ---------- */
+.page {
+  /* 顶栏在桌面端为 sticky，不占额外高度；小屏在断点内补 padding-top */
+  min-height: 100vh;
+}
