@@ -6,7 +6,7 @@
 
 一个尚在筹备中的非官方《崩坏：星穹铁道》流萤主题同好网站。
 
-[项目域名](https://xn--qzw410c.love) · [GitHub 仓库](https://github.com/XingYunStar/FireflyLoveSite) · [提交 Issue](https://github.com/XingYunStar/FireflyLoveSite/issues) · [加入 QQ 群](https://qm.qq.com/q/guZg2hdNE4)
+[项目域名](https://xn--qzw410c.love) · [GitHub 仓库](https://github.com/FireflyDevs/FireflyLoveSite) · [提交 Issue](https://github.com/FireflyDevs/FireflyLoveSite/issues) · [加入 QQ 群](https://qm.qq.com/q/guZg2hdNE4)
 
 </div>
 
@@ -14,7 +14,7 @@
 
 ## 关于这个项目
 
-`FireflyLoveSite` 是 **流萤.love** 的网站源码。它面向所有喜欢流萤、喜欢《崩坏：星穹铁道》的玩家，希望做成一个友善、用心、可以长期维护的同好空间。
+`FireflyLoveSite` 是 **流萤.love** 的网站源码，由 [FireflyDevs（流萤开发团队）](https://github.com/FireflyDevs) 维护。它面向所有喜欢流萤、喜欢《崩坏：星穹铁道》的玩家，希望做成一个友善、用心、可以长期维护的同好空间。
 
 目前网站还在筹备和持续完善中。页面里的流萤主题首页、角色内容、壁纸与同人内容入口已经搭好基础，接下来会逐步补充角色档案、图集、视频、资料库和更多社区内容。
 
@@ -54,7 +54,7 @@
 需要 Node.js 24 或更高版本。
 
 ```bash
-git clone https://github.com/XingYunStar/FireflyLoveSite.git
+git clone https://github.com/FireflyDevs/FireflyLoveSite.git
 cd FireflyLoveSite
 node server.ts
 ```
