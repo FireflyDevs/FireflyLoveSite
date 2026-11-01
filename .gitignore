@@ -39,3 +39,5 @@ __screenshots__/
 *.timestamp-*-*.mjs
 
 design/
+# 原始字体源文件（约 52MB，仅本地保留，用于重新生成子集）
+.font-src/

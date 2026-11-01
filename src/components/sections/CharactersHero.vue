@@ -11,7 +11,7 @@ import { ref } from 'vue'
 
 import { useSpotlight } from '@/composables/useSpotlight'
 
-import portraitUrl from '@/assets/ff/feature.jpg'
+import portraitUrl from '@/assets/char_hero.jpg'
 
 /** 身份标签（首枚视为高亮 chip） */
 const CHIPS: string[] = ['星核猎手', '毁灭 · 命途', '火 · 属性', '限定 5★', '匹诺康尼']
@@ -80,12 +80,7 @@ defineExpose({ root })
           </h2>
 
           <div class="chips">
-            <span
-              v-for="(chip, i) in CHIPS"
-              :key="chip"
-              class="chip"
-              :class="{ 'is-key': i === 0 }"
-            >
+            <span v-for="(chip, i) in CHIPS" :key="chip" class="chip" :class="{ 'is-key': i === 0 }">
               {{ chip }}
             </span>
           </div>
@@ -238,13 +233,11 @@ defineExpose({ root })
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(6, 13, 26, 0.3) 0%,
-    transparent 30%,
-    transparent 55%,
-    rgba(5, 11, 23, 0.9) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(6, 13, 26, 0.3) 0%,
+      transparent 30%,
+      transparent 55%,
+      rgba(5, 11, 23, 0.9) 100%);
 }
 
 /* ---------- 档案正文 ---------- */
