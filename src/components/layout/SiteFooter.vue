@@ -164,9 +164,6 @@ const onFooterPointerDown = useRipple(footerRef, shouldSkip)
 
 /* ---------- 移动端 ---------- */
 @media (max-width: 860px) {
-  .site-footer {
-    margin-top: 0;
-  }
 
   .footer-inner {
     flex-direction: column;
