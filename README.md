@@ -16,7 +16,7 @@
 
 `FireflyLoveSite` 是 **流萤.love** 的网站源码，由 [FireflyDevs（流萤的秘密基地）](https://github.com/FireflyDevs) 维护。它面向所有喜欢流萤、喜欢《崩坏：星穹铁道》的玩家，希望做成一个友善、用心、可以长期维护的同好空间。
 
-目前网站还在筹备和持续完善中。站点已由单文件页面重构为 **Vue 3 + Vite** 的组件化工程，首页的视觉与内容主体已经迁移完成，其余页面（角色介绍 / 图集 / 视频 / 资料库）已建立路由骨架，内容待逐步补入。
+目前网站仍在筹备中，页面内容不是最终版本，允许大幅度重构，欢迎大家一起补充和改造。当前允许所有人[参与开发dev分支](./#分支与自动部署)，dev分支在[dev.流萤.love](https://dev.流萤.love)实时更新显示。
 
 > 「不、不好意思！请帮帮我……」
 >
@@ -24,42 +24,7 @@
 
 这是一个**非官方同人项目**，与米哈游 / HoYoverse 官方无关。
 
-## 页面结构
 
-站点是单页应用（SPA），由 `vue-router` 管理路由：
-
-| 路由 | 页面 | 状态 |
-| --- | --- | --- |
-| `/` | 首页 | 已完成（主视觉、最新动态、主推卡片、快捷入口、收尾横幅） |
-| `/characters` | 角色介绍 | 路由骨架，内容待迁移 |
-| `/gallery` | 图集 | 路由骨架，内容待迁移 |
-| `/videos` | 视频 | 路由骨架，内容待迁移 |
-| `/library` | 资料库 | 路由骨架，内容待迁移 |
-
-首页包含：
-
-- **首屏**：流萤主题视觉、`Firefly` / `流萤` 中英文标识、角色寄语与「进入她的世界」入口
-- **导航**：桌面端顶栏 + `860px` 以下切换为底部标签栏
-- **最新动态**：角色故事、官方资讯、活动资讯、壁纸精选等卡片（桌面端与移动端各有一套标题文案）
-- **快捷入口**：图集、视频、资料库等入口，未接页面的按钮保留「开发中」弹窗
-- **收尾横幅**：共建邀请与站点说明
-- **开源入口**：顶栏与页脚提供 [FireflyDevs](https://github.com/FireflyDevs) 的 GitHub 图标入口
-
-页面细节包括响应式布局、星空/光点动画、自定义中英文字体，以及跟随系统 `prefers-reduced-motion` 的动效降级。
-
-## 技术栈
-
-| 部分 | 技术 |
-| --- | --- |
-| 框架 | Vue 3（`<script setup>` + TypeScript） |
-| 路由 | vue-router（`createWebHistory`，History 模式） |
-| 构建 | Vite 8 + `@vitejs/plugin-vue` |
-| 类型检查 | `vue-tsc --build` |
-| 代码格式 | Prettier |
-| 部署 | 静态站点：构建产物 `dist/` 交给 Nginx 托管（见 [DEPLOYMENT.md](DEPLOYMENT.md)） |
-| CI | GitHub Actions：类型检查 + 构建，dev 分支自动合并 |
-
-构建产物是**纯静态文件**，生产环境不需要 Node.js 常驻进程。
 
 ## 本地开发
 
@@ -87,6 +52,8 @@ pnpm format       # 用 Prettier 格式化 src/
 仓库使用 pnpm 并提交了 `pnpm-lock.yaml`，请优先使用 `pnpm`。
 
 > 注意：`pnpm preview` 与 Vite 开发服务器都会对未知路径回退到 `index.html`，所以子路由在本地可以正常刷新。部署到静态服务器时**必须**配置同样的回退规则，否则直接访问 `/characters` 等地址会 404，详见 [DEPLOYMENT.md](DEPLOYMENT.md)。
+
+
 
 ## 目录结构
 
@@ -120,30 +87,7 @@ FireflyLoveSite/
 └── DEPLOYMENT.md                  # 部署与运维说明
 ```
 
-## 跳转规则
 
-站点的 5 条历史跳转已从服务端配置文件迁移到 **前端路由**，定义在 `src/router/index.ts` 的 `REDIRECTS` 表中：
-
-| 源路径 | 目标 |
-| --- | --- |
-| `/image.Firefly` | `https://img.流萤.love/image.Firefly` |
-| `/like.Firefly` | `https://img.流萤.love/like.Firefly` |
-| `/look.html` | `https://img.流萤.love/look.html` |
-| `/pixiv.Firefly` | `https://img.流萤.love/pixiv.Firefly` |
-| `/thank.html` | `https://img.流萤.love/thank.html` |
-
-这些规则在浏览器端生效：用户访问上述路径时，应用加载后由 `vue-router` 跳转到图片站，并保留原请求的查询串与 `#hash`。
-
-由于跳转不再是服务端行为，**部署层需要同时转发这些路径到 `index.html`**（与子路由回退是同一套规则），否则请求会在到达应用之前就返回 404。相关配置见 [DEPLOYMENT.md](DEPLOYMENT.md)。
-
-新增一条跳转，在 `REDIRECTS` 中加一行即可：
-
-```ts
-const REDIRECTS: Readonly<Record<string, string>> = {
-  // ...
-  '/example': '../.example',
-}
-```
 
 ## 分支与自动部署
 
@@ -161,6 +105,8 @@ const REDIRECTS: Readonly<Record<string, string>> = {
 5. 合并后服务器自动部署到 https://dev.流萤.love
 
 `main` 只接收经过验证的发布内容，功能开发请统一提交到 `dev`。
+
+
 
 ## 参与贡献
 
