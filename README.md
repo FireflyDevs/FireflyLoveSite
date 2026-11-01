@@ -16,7 +16,7 @@
 
 `FireflyLoveSite` 是 **流萤.love** 的网站源码，由 [FireflyDevs（流萤的秘密基地）](https://github.com/FireflyDevs) 维护。它面向所有喜欢流萤、喜欢《崩坏：星穹铁道》的玩家，希望做成一个友善、用心、可以长期维护的同好空间。
 
-目前网站还在筹备和持续完善中。页面里的流萤主题首页、角色内容、壁纸与同人内容入口已经搭好基础，接下来会逐步补充角色档案、图集、视频、资料库和更多社区内容。
+目前网站还在筹备和持续完善中。站点已由单文件页面重构为 **Vue 3 + Vite** 的组件化工程，首页的视觉与内容主体已经迁移完成，其余页面（角色介绍 / 图集 / 视频 / 资料库）已建立路由骨架，内容待逐步补入。
 
 > 「不、不好意思！请帮帮我……」
 >
@@ -24,60 +24,125 @@
 
 这是一个**非官方同人项目**，与米哈游 / HoYoverse 官方无关。
 
-## firefly.html 里有什么
+## 页面结构
 
-`firefly.html` 是网站默认页面，也是目前视觉和内容的主体。它包含：
+站点是单页应用（SPA），由 `vue-router` 管理路由：
+
+| 路由 | 页面 | 状态 |
+| --- | --- | --- |
+| `/` | 首页 | 已完成（主视觉、最新动态、主推卡片、快捷入口、收尾横幅） |
+| `/characters` | 角色介绍 | 路由骨架，内容待迁移 |
+| `/gallery` | 图集 | 路由骨架，内容待迁移 |
+| `/videos` | 视频 | 路由骨架，内容待迁移 |
+| `/library` | 资料库 | 路由骨架，内容待迁移 |
+
+首页包含：
 
 - **首屏**：流萤主题视觉、`Firefly` / `流萤` 中英文标识、角色寄语与「进入她的世界」入口
-- **导航**：首页、角色介绍、图集、视频、资料库和搜索入口，移动端提供底部导航
-- **最新动态**：角色故事、官方资讯、活动资讯、壁纸精选、同人作品等卡片
-- **角色介绍**：流萤角色资料、图片壁纸、视频剪辑、同人创作、周边推荐
-- **共建邀请**：「加入共建团队」弹窗，邀请喜欢流萤、愿意一起维护网站的人参与
-- **开源入口**：顶栏与页脚提供 [FireflyDevs](https://github.com/FireflyDevs) 的 GitHub 图标入口，方便查看源码、提交 Issue 或参与共建
-- **页面细节**：响应式布局、星空/光点动画、中英文字体与内容交互
-- **非官方声明**：明确项目与官方无关
+- **导航**：桌面端顶栏 + `860px` 以下切换为底部标签栏
+- **最新动态**：角色故事、官方资讯、活动资讯、壁纸精选等卡片（桌面端与移动端各有一套标题文案）
+- **快捷入口**：图集、视频、资料库等入口，未接页面的按钮保留「开发中」弹窗
+- **收尾横幅**：共建邀请与站点说明
+- **开源入口**：顶栏与页脚提供 [FireflyDevs](https://github.com/FireflyDevs) 的 GitHub 图标入口
 
-网站使用 TypeScript + Node.js 提供服务，`firefly.html` 由 Node 服务作为默认页返回，同时支持可配置的 301/302 跳转。
+页面细节包括响应式布局、星空/光点动画、自定义中英文字体，以及跟随系统 `prefers-reduced-motion` 的动效降级。
 
 ## 技术栈
 
 | 部分 | 技术 |
 | --- | --- |
-| 页面 | HTML5 + CSS3 + 原生 JavaScript |
-| 服务端 | TypeScript + Node.js（原生 HTTP，无运行时依赖） |
-| 部署 | Nginx 反向代理 + systemd（生产站 / dev 预览站两套） |
-| CI/CD | GitHub Actions：类型检查 + 页面/跳转检查 + dev 自动合并、自动部署 |
-| 跳转 | `redirects.json` 配置，支持 301/302，保存后自动重载 |
+| 框架 | Vue 3（`<script setup>` + TypeScript） |
+| 路由 | vue-router（`createWebHistory`，History 模式） |
+| 构建 | Vite 8 + `@vitejs/plugin-vue` |
+| 类型检查 | `vue-tsc --build` |
+| 代码格式 | Prettier |
+| 部署 | 静态站点：构建产物 `dist/` 交给 Nginx 托管（见 [DEPLOYMENT.md](DEPLOYMENT.md)） |
+| CI | GitHub Actions：类型检查 + 构建，dev 分支自动合并 |
 
-当前服务器使用 Node.js 26，可以直接运行 `.ts` 文件，无需额外编译。
+构建产物是**纯静态文件**，生产环境不需要 Node.js 常驻进程。
 
-## 本地运行
+## 本地开发
 
-需要 Node.js 24 或更高版本。
+需要 Node.js `^22.18.0 || >=24.12.0`（见 `package.json` 的 `engines` 字段）。
 
 ```bash
 git clone https://github.com/FireflyDevs/FireflyLoveSite.git
 cd FireflyLoveSite
-node server.ts
+pnpm install
+pnpm dev
 ```
 
-然后打开：
+然后打开终端提示的地址（默认 `http://127.0.0.1:5173/`）。
 
-```text
-http://127.0.0.1:3000/
-```
-
-默认会读取同目录下的 `firefly.html`。跳转规则在 `redirects.json` 中修改，服务会自动检测配置变化。
-
-可选：安装开发依赖并做 TypeScript 类型检查（仓库包含 pnpm 锁文件，npm / pnpm 均可）：
+常用命令：
 
 ```bash
-pnpm install
-pnpm typecheck
+pnpm dev          # 启动开发服务器（热更新）
+pnpm type-check   # vue-tsc 类型检查
+pnpm build        # 类型检查 + 生产构建，输出到 dist/
+pnpm preview      # 本地预览构建产物
+pnpm format       # 用 Prettier 格式化 src/
+```
 
-# 或者
-npm install
-npm run typecheck
+仓库使用 pnpm 并提交了 `pnpm-lock.yaml`，请优先使用 `pnpm`。
+
+> 注意：`pnpm preview` 与 Vite 开发服务器都会对未知路径回退到 `index.html`，所以子路由在本地可以正常刷新。部署到静态服务器时**必须**配置同样的回退规则，否则直接访问 `/characters` 等地址会 404，详见 [DEPLOYMENT.md](DEPLOYMENT.md)。
+
+## 目录结构
+
+```text
+FireflyLoveSite/
+├── .github/
+│   ├── scripts/ci-check.sh        # CI 站点检查脚本
+│   └── workflows/                 # CI 与自动合并工作流
+├── public/
+│   └── favicon.ico                # 原样拷贝到构建产物根目录
+├── src/
+│   ├── assets/
+│   │   ├── ff/                    # 页面图片素材
+│   │   ├── fonts/                 # 自定义字体（woff2）
+│   │   ├── hero.jpg               # 首屏主视觉
+│   │   └── main.css               # 全局样式、@font-face 与 CSS 变量
+│   ├── components/
+│   │   ├── icons/                 # 图标组件（全部跟随 currentColor）
+│   │   ├── layout/                # 顶栏、页脚、移动端底栏、开发弹窗
+│   │   └── sections/              # 首页区块
+│   ├── composables/               # 组合式函数（涟漪、入场动画、弹窗委托等）
+│   ├── router/index.ts            # 路由表与跳转规则
+│   ├── views/                     # 页面组件
+│   ├── App.vue                    # 根组件（全站布局）
+│   └── main.ts                    # 应用入口
+├── index.html                     # Vite HTML 模板
+├── vite.config.ts
+├── tsconfig*.json
+├── package.json
+├── README.md
+└── DEPLOYMENT.md                  # 部署与运维说明
+```
+
+## 跳转规则
+
+站点的 5 条历史跳转已从服务端配置文件迁移到 **前端路由**，定义在 `src/router/index.ts` 的 `REDIRECTS` 表中：
+
+| 源路径 | 目标 |
+| --- | --- |
+| `/image.Firefly` | `https://img.流萤.love/image.Firefly` |
+| `/like.Firefly` | `https://img.流萤.love/like.Firefly` |
+| `/look.html` | `https://img.流萤.love/look.html` |
+| `/pixiv.Firefly` | `https://img.流萤.love/pixiv.Firefly` |
+| `/thank.html` | `https://img.流萤.love/thank.html` |
+
+这些规则在浏览器端生效：用户访问上述路径时，应用加载后由 `vue-router` 跳转到图片站，并保留原请求的查询串与 `#hash`。
+
+由于跳转不再是服务端行为，**部署层需要同时转发这些路径到 `index.html`**（与子路由回退是同一套规则），否则请求会在到达应用之前就返回 404。相关配置见 [DEPLOYMENT.md](DEPLOYMENT.md)。
+
+新增一条跳转，在 `REDIRECTS` 中加一行即可：
+
+```ts
+const REDIRECTS: Readonly<Record<string, string>> = {
+  // ...
+  '/example': '../.example',
+}
 ```
 
 ## 分支与自动部署
@@ -90,27 +155,12 @@ npm run typecheck
 工作流程：
 
 1. 从 `dev` 创建功能分支，提交 Pull Request 到 `dev`
-2. GitHub Actions 自动运行 TypeScript 类型检查、首页和跳转检查
+2. GitHub Actions 自动运行类型检查与站点检查
 3. 团队成员发起的 PR 在检查通过后自动压缩合并到 `dev`
 4. 外部贡献者的 PR 会先运行检查，由维护者审核后合并
 5. 合并后服务器自动部署到 https://dev.流萤.love
 
 `main` 只接收经过验证的发布内容，功能开发请统一提交到 `dev`。
-
-## 目录结构
-
-```text
-FireflyLoveSite/
-├── .github/              # CI 与自动合并工作流
-├── firefly.html          # 默认页面
-├── server.ts             # TypeScript 网站服务
-├── redirects.json        # 301/302 跳转规则
-├── pic/ff/               # 页面图片素材
-├── package.json
-├── tsconfig.json
-├── README.md
-└── DEPLOYMENT.md         # 部署与运维说明
-```
 
 ## 参与贡献
 
@@ -131,8 +181,9 @@ FireflyLoveSite/
 3. 完成修改并本地测试：
 
    ```bash
-   node server.ts
-   pnpm typecheck
+   pnpm dev
+   pnpm type-check
+   pnpm build
    ```
 
 4. 提交并推送：
@@ -154,7 +205,7 @@ FireflyLoveSite/
 1. 在 GitHub 提交一个 Issue，标题写「申请加入开发团队」
 2. 简单介绍：
    - 你的 GitHub 用户名
-   - 你擅长的方向（前端 / 后端 / UI 设计 / 内容整理 / 测试等）
+   - 你擅长的方向（前端 / UI 设计 / 内容整理 / 测试等）
    - 每周大概能投入的时间
    - 你想参与的部分
 3. 也可以直接加入页面中的 [QQ 群](https://qm.qq.com/q/guZg2hdNE4) 联系维护者
@@ -163,11 +214,11 @@ FireflyLoveSite/
 
 ### 可以贡献什么
 
-- 前端页面、交互和响应式适配
+- 前端页面、交互和响应式适配（Vue 组件）
 - UI / 视觉 / 动效设计
 - 流萤角色资料、活动资料、图集和视频整理
 - 壁纸、同人内容、周边信息的收录与校对
-- TypeScript / Node.js 后端与部署优化
+- 构建、部署与性能优化
 - 文案、翻译、无障碍和移动端体验
 - 测试、Issue 整理和新人答疑
 
@@ -179,32 +230,7 @@ FireflyLoveSite/
 - 不提交密钥、Token、服务器密码等敏感信息
 - 新功能请同步更新 README 或相关文档
 - 图片和游戏素材请确认来源与授权，尊重原作者和官方版权
-- 提交前至少运行一次 `node server.ts`，确认首页和跳转正常
-- CI 会运行 `pnpm typecheck` 和 `.github/scripts/ci-check.sh`，请确保本地也能通过
-
-## 跳转配置
-
-当前配置了以下 302 跳转：
-
-| 源路径 | 目标 |
-| --- | --- |
-| `/image.Firefly` | `https://img.流萤.love/image.Firefly` |
-| `/like.Firefly` | `https://img.流萤.love/like.Firefly` |
-| `/look.html` | `https://img.流萤.love/look.html` |
-| `/pixiv.Firefly` | `https://img.流萤.love/pixiv.Firefly` |
-| `/thank.html` | `https://img.流萤.love/thank.html` |
-
-新增一条 301 跳转：
-
-```json
-{
-  "from": "/example",
-  "to": "https://example.com/new-path",
-  "status": 301
-}
-```
-
-把规则加入 `redirects.json` 的 `rules` 数组即可。服务会自动重新加载配置，不需要重启。详细说明见 [DEPLOYMENT.md](DEPLOYMENT.md)。
+- 提交前至少运行一次 `pnpm type-check` 与 `pnpm build`，确认类型检查与构建通过
 
 ## 版权与免责声明
 

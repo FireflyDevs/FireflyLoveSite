@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
-import IconCatalog from '@/views/IconCatalog.vue'
 
 /**
  * 页面路由。
@@ -38,14 +37,7 @@ const PAGES: RouteRecordRaw[] = [
     name: 'library',
     component: () => import('@/views/LibraryView.vue'),
     meta: { title: '资料库' },
-  },
-  {
-    // 开发用图标目录，不属于导航入口
-    path: '/icons',
-    name: 'icons',
-    component: IconCatalog,
-    meta: { title: '图标目录' },
-  },
+  }
 ]
 
 /**

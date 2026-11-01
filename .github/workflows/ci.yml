@@ -37,7 +37,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: TypeScript typecheck
-        run: pnpm typecheck
+        run: pnpm type-check
 
       - name: Site and redirect checks
         run: bash .github/scripts/ci-check.sh
