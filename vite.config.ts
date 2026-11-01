@@ -15,4 +15,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  build: {
+    // Some Android WebViews still report Chrome 99 and do not understand
+    // Media Queries range syntax like (width <= 860px). Keep CSS compatible.
+    cssTarget: 'chrome99',
+  },
 })
