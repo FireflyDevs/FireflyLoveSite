@@ -6,7 +6,7 @@
 
 一个尚在筹备中的非官方《崩坏：星穹铁道》流萤主题同好网站。
 
-[项目域名](https://xn--qzw410c.love) · [开发预览](https://dev.xn--qzw410c.love) · [GitHub 仓库](https://github.com/FireflyDevs/FireflyLoveSite) · [提交 Issue](https://github.com/FireflyDevs/FireflyLoveSite/issues) · [加入 QQ 群](https://qm.qq.com/q/guZg2hdNE4)
+[项目域名](https://xn--qzw410c.love) · [开发预览](https://dev.xn--qzw410c.love) · [加入开发团队](https://github.com/FireflyDevs)
 
 </div>
 
@@ -16,7 +16,7 @@
 
 `FireflyLoveSite` 是 **流萤.love** 的网站源码，由 [FireflyDevs（流萤的秘密基地）](https://github.com/FireflyDevs) 维护。它面向所有喜欢流萤、喜欢《崩坏：星穹铁道》的玩家，希望做成一个友善、用心、可以长期维护的同好空间。
 
-目前网站仍在筹备中，页面内容不是最终版本，允许大幅度重构，欢迎大家一起补充和改造。当前允许所有人[参与开发dev分支](./#分支与自动部署)，dev分支在[dev.流萤.love](https://dev.流萤.love)实时更新显示。
+目前网站仍在筹备中，页面内容不是最终版本，允许大幅度重构，欢迎大家一起补充和改造。当前允许所有人[参与开发dev分支](https://github.com/FireflyDevs/FireflyLoveSite#分支与自动部署)，dev分支在[dev.流萤.love](https://dev.流萤.love)实时更新显示。
 
 > 「不、不好意思！请帮帮我……」
 >
