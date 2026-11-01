@@ -2,9 +2,6 @@
 /**
  * 站点页脚
  *
- * 结构、类名与样式移植自 `1.html` 的 `.site-footer` 段（`1.html:3617-3666`），
- * 响应式取自 `1.html:2787-2822`。
- *
  * 交互：
  * - 涟漪：`useRipple`（GitHub 是外链 `<a>`，其余是 `data-modal` 按钮）
  * - 未接页面的按钮保留原稿的 `data-modal` 行为，与顶栏一致
@@ -31,14 +28,8 @@ const onFooterPointerDown = useRipple(footerRef, shouldSkip)
   <footer ref="footerRef" class="site-footer" @pointerdown="onFooterPointerDown">
     <div class="shell footer-inner">
       <div class="socials">
-        <a
-          class="social social-github"
-          href="https://github.com/FireflyDevs"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub · FireflyDevs"
-          title="GitHub · FireflyDevs"
-        >
+        <a class="social social-github" href="https://github.com/FireflyDevs" target="_blank" rel="noopener noreferrer"
+          aria-label="GitHub · FireflyDevs" title="GitHub · FireflyDevs">
           <IconGithub />
         </a>
         <button class="social" type="button" data-modal aria-label="Discord">
@@ -62,13 +53,10 @@ const onFooterPointerDown = useRipple(footerRef, shouldSkip)
 </template>
 
 <style scoped>
-/* ============================================================
-   页脚 —— 移植自 1.html:1724-1796
-   ============================================================ */
 .site-footer {
   position: relative;
   z-index: 2;
-  margin-top: 0;
+  margin-top: 10px;
   border-top: 1px solid rgba(150, 190, 245, 0.15);
   background: linear-gradient(180deg, rgba(6, 13, 26, 0.4), rgba(5, 11, 22, 0.85));
 }

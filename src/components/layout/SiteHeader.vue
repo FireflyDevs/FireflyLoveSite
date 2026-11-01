@@ -118,24 +118,15 @@ const navItems: NavItem[] = [
           <svg viewBox="0 0 44 44" fill="currentColor">
             <g class="wing l">
               <path
-                d="M21.6 21.1C16.9 11.4 8.9 6.3 4.9 10.1 1.2 13.6 5.2 20.5 15.7 21.9 6.7 23.3 4.6 30.3 8.6 33.3c3.9 2.9 9.3-2.8 12.4-11.1Z"
-              />
+                d="M21.6 21.1C16.9 11.4 8.9 6.3 4.9 10.1 1.2 13.6 5.2 20.5 15.7 21.9 6.7 23.3 4.6 30.3 8.6 33.3c3.9 2.9 9.3-2.8 12.4-11.1Z" />
             </g>
             <g class="wing r">
               <path
-                d="M22.4 21.1c4.7-9.7 12.7-14.8 16.7-11 3.7 3.5-.3 10.4-10.8 11.8 9 1.4 11.1 8.4 7.1 11.4-3.9 2.9-9.3-2.8-12.4-11.1Z"
-              />
+                d="M22.4 21.1c4.7-9.7 12.7-14.8 16.7-11 3.7 3.5-.3 10.4-10.8 11.8 9 1.4 11.1 8.4 7.1 11.4-3.9 2.9-9.3-2.8-12.4-11.1Z" />
             </g>
-            <path
-              d="M21.6 15.6c1.2 0 1.9 1.5 1.5 3.8l-.8 5.6c-.2 1.4-1 1.4-1.2 0l-.8-5.6c-.4-2.3.3-3.8 1.3-3.8Z"
-            />
-            <path
-              d="M20.4 16.2c-1-2-2.6-3.6-4.3-4.6m7.9 4.6c1-2 2.6-3.6 4.3-4.6"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.1"
-              stroke-linecap="round"
-            />
+            <path d="M21.6 15.6c1.2 0 1.9 1.5 1.5 3.8l-.8 5.6c-.2 1.4-1 1.4-1.2 0l-.8-5.6c-.4-2.3.3-3.8 1.3-3.8Z" />
+            <path d="M20.4 16.2c-1-2-2.6-3.6-4.3-4.6m7.9 4.6c1-2 2.6-3.6 4.3-4.6" fill="none" stroke="currentColor"
+              stroke-width="1.1" stroke-linecap="round" />
           </svg>
         </span>
         <span class="brand-text">
@@ -167,28 +158,16 @@ const navItems: NavItem[] = [
           <span>搜索...</span>
         </button>
 
-        <button
-          class="icon-btn sun"
-          type="button"
-          data-modal
-          aria-label="切换主题"
-          title="切换主题"
-        >
+        <button class="icon-btn sun" type="button" data-modal aria-label="切换主题" title="切换主题">
           <IconTheme :size="21" />
         </button>
 
-        <a
-          class="icon-btn github github-btn"
-          href="https://github.com/FireflyDevs"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub · FireflyDevs"
-          title="GitHub · FireflyDevs"
-        >
+        <a class="icon-btn github github-btn" href="https://github.com/FireflyDevs" target="_blank"
+          rel="noopener noreferrer" aria-label="GitHub · FireflyDevs" title="GitHub · FireflyDevs">
           <IconGithub :size="22" />
         </a>
 
-        <button
+        <!--<button
           class="icon-btn bfly"
           type="button"
           data-modal
@@ -196,34 +175,23 @@ const navItems: NavItem[] = [
           title="流萤主题"
         >
           <IconButterfly :size="21" />
-        </button>
+        </button>-->
       </div>
 
       <!-- 移动端操作区：只保留汉堡菜单 -->
       <div class="mobile-only-actions">
         <!-- 汉堡菜单：按钮与面板放在同一容器里，便于判定「点击外部」 -->
         <div ref="menuRoot" class="menu-wrap">
-          <button
-            class="icon-btn menu-btn"
-            :class="{ 'is-open': menuOpen }"
-            type="button"
-            :aria-label="menuOpen ? '关闭菜单' : '打开菜单'"
-            :aria-expanded="menuOpen"
-            aria-controls="mobile-menu"
-            @click="toggleMenu"
-          >
+          <button class="icon-btn menu-btn" :class="{ 'is-open': menuOpen }" type="button"
+            :aria-label="menuOpen ? '关闭菜单' : '打开菜单'" :aria-expanded="menuOpen" aria-controls="mobile-menu"
+            @click="toggleMenu">
             <IconMenu :size="21" />
           </button>
 
           <Transition name="menu-fade">
             <nav v-show="menuOpen" id="mobile-menu" class="mobile-menu" aria-label="移动端导航">
-              <RouterLink
-                v-for="item in navItems"
-                :key="item.label"
-                class="mobile-menu-link"
-                :to="item.to ?? '/'"
-                @click="closeMenu"
-              >
+              <RouterLink v-for="item in navItems" :key="item.label" class="mobile-menu-link" :to="item.to ?? '/'"
+                @click="closeMenu">
                 <span v-if="item.icon" class="menu-ico" aria-hidden="true">
                   <IconHome v-if="item.icon === 'home'" :size="18" />
                   <IconVideo v-else-if="item.icon === 'video'" :size="18" />
@@ -307,6 +275,7 @@ const navItems: NavItem[] = [
 }
 
 @keyframes wing-idle {
+
   0%,
   72%,
   100% {
@@ -327,6 +296,7 @@ const navItems: NavItem[] = [
 }
 
 @keyframes wing-flap {
+
   0%,
   100% {
     transform: scaleX(1);
@@ -389,7 +359,7 @@ const navItems: NavItem[] = [
     text-shadow 0.24s ease;
 }
 
-.nav-link > svg {
+.nav-link>svg {
   width: 17px;
   height: 17px;
   opacity: 0.9;
@@ -401,7 +371,7 @@ const navItems: NavItem[] = [
   text-shadow: 0 0 14px rgba(180, 215, 255, 0.6);
 }
 
-.nav-link:hover > svg {
+.nav-link:hover>svg {
   transform: translateY(-1px) scale(1.08);
 }
 
@@ -442,7 +412,7 @@ const navItems: NavItem[] = [
 }
 
 /* 相邻导航项之间的星芒分隔符 */
-.nav-link + .nav-link::before {
+.nav-link+.nav-link::before {
   content: '✦';
   position: absolute;
   left: -4px;
@@ -489,14 +459,14 @@ const navItems: NavItem[] = [
   box-shadow: 0 0 22px rgba(120, 170, 240, 0.22);
 }
 
-.search-pill > svg {
+.search-pill>svg {
   width: 17px;
   height: 17px;
   flex: none;
   transition: transform 0.3s;
 }
 
-.search-pill:hover > svg {
+.search-pill:hover>svg {
   transform: scale(1.08);
 }
 
@@ -598,6 +568,7 @@ const navItems: NavItem[] = [
 }
 
 @keyframes bfly-bob {
+
   0%,
   100% {
     transform: translateY(0) rotate(-4deg);
@@ -697,7 +668,7 @@ const navItems: NavItem[] = [
 
 /* 相邻项之间一道极淡分隔，替代原稿的 ✦ 星芒（小屏空间有限）。
    用伪元素做成隔行缩进的效果，高亮时自动隐藏，不打断选中块的圆角 */
-.mobile-menu-link + .mobile-menu-link::before {
+.mobile-menu-link+.mobile-menu-link::before {
   content: '';
   position: absolute;
   left: 12px;
@@ -707,7 +678,7 @@ const navItems: NavItem[] = [
   background: rgba(150, 190, 245, 0.12);
 }
 
-.mobile-menu-link + .mobile-menu-link.router-link-active::before {
+.mobile-menu-link+.mobile-menu-link.router-link-active::before {
   opacity: 0;
 }
 
@@ -761,12 +732,10 @@ const navItems: NavItem[] = [
     top: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(5, 12, 26, 0.86),
-      rgba(5, 12, 26, 0.5) 70%,
-      transparent
-    );
+    background: linear-gradient(180deg,
+        rgba(5, 12, 26, 0.86),
+        rgba(5, 12, 26, 0.5) 70%,
+        transparent);
     border-bottom: 0;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;

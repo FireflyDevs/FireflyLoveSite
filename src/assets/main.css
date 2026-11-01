@@ -131,6 +131,91 @@ svg {
   border-radius: 6px;
 }
 
+/* ============================================================
+   自定义鼠标指针（流萤像素指针，素材 by 乱涂乱画ben）
+   ------------------------------------------------------------
+   素材来源：Mac.zip 中 Firefly's Pixel Cursors 的 *-Sheet.png
+   （32x256 垂直 8 帧动画条）。此处**只取首帧**做静态指针，
+   因此各状态行为在所有浏览器一致，不依赖多帧 url() 列表。
+
+   尺寸：32px 原图经 nearest 放大到 1x/2x/3x 三档，
+   由 image-set() 交给浏览器按设备像素比挑选；
+   image-rendering: pixelated 保证放大后仍是硬边像素。
+   ============================================================ */
+
+/* 指针图像的 URL 集中在此，换图只需改这一处。
+   注意：CSS 变量里的 url() 是相对本文件的路径，
+   指向 public/ 下的静态资源需用绝对路径 /cursors/... */
+:root {
+  --cur-default: image-set(
+    url('/cursors/default.png') 1x,
+    url('/cursors/default@2x.png') 2x,
+    url('/cursors/default@3x.png') 3x
+  );
+  --cur-pointer: image-set(
+    url('/cursors/pointer.png') 1x,
+    url('/cursors/pointer@2x.png') 2x,
+    url('/cursors/pointer@3x.png') 3x
+  );
+  --cur-text: image-set(
+    url('/cursors/text.png') 1x,
+    url('/cursors/text@2x.png') 2x,
+    url('/cursors/text@3x.png') 3x
+  );
+  --cur-not-allowed: image-set(
+    url('/cursors/not-allowed.png') 1x,
+    url('/cursors/not-allowed@2x.png') 2x,
+    url('/cursors/not-allowed@3x.png') 3x
+  );
+  --cur-progress: image-set(
+    url('/cursors/progress.png') 1x,
+    url('/cursors/progress@2x.png') 2x,
+    url('/cursors/progress@3x.png') 3x
+  );
+}
+
+/* 全站基础指针 + 像素渲染。
+   image-rendering 对光标生效的浏览器有限，加上无害。 */
+html,
+body {
+  cursor: var(--cur-default), auto;
+  image-rendering: pixelated;
+}
+
+/* 可交互元素统一用手型指针。
+   热点 (2, 1)：对准手型食指顶端（CSS 坐标以 1x 的 32px 画布为基准，
+   高 DPI 下浏览器会自动按倍数换算）。 */
+a,
+button,
+[role='button'],
+summary,
+label[for],
+select,
+.cursor-pointer {
+  cursor: var(--cur-pointer) 2 1, pointer;
+}
+
+/* 表单输入区用 I 形光标，热点对准字形中部 */
+input,
+textarea,
+[contenteditable='true'] {
+  cursor: var(--cur-text) 4 15, text;
+}
+
+/* 禁用态 */
+[disabled],
+[aria-disabled='true'],
+button:disabled,
+input:disabled {
+  cursor: var(--cur-not-allowed) 1 1, not-allowed;
+}
+
+/* 加载中等候态（由组件按需加 .is-busy / aria-busy） */
+[aria-busy='true'],
+.is-busy {
+  cursor: var(--cur-progress) 1 1, progress;
+}
+
 ::selection {
   background: rgba(126, 175, 255, 0.32);
 }
