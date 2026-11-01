@@ -120,10 +120,39 @@ expect_status "${asset_path}" "200"
 echo "==> Checking bundled images and fonts"
 expect_status "/favicon.ico" "200"
 
+echo "==> Checking Chrome 99 CSS compatibility"
+# Chrome 99 WebView does not support Media Queries range syntax.
+if grep -RqE 'width[[:space:]]*(<=|>=)' dist/assets --include='*.css'; then
+  echo "Found Media Queries range syntax in built CSS; set cssTarget to chrome99." >&2
+  exit 1
+fi
+if ! grep -Rq 'max-width' dist/assets --include='*.css'; then
+  echo "No max-width media queries found in built CSS." >&2
+  exit 1
+fi
+
 echo "==> Checking source guard"
 # dist/ 只包含构建产物，源码与文档不应被发布
-expect_status "/package.json" "404"
-expect_status "/README.md" "404"
-expect_status "/DEPLOYMENT.md" "404"
+for file in package.json README.md DEPLOYMENT.md server.ts redirects.json .env .git; do
+  if [[ -e "dist/${file}" ]]; then
+    echo "Source file must not exist in dist/: ${file}" >&2
+    exit 1
+  fi
+done
+
+# Vite preview uses SPA fallback for unknown routes. A 200 is acceptable only
+# when it is the SPA shell; it must not expose raw package.json or Markdown.
+for path in "/package.json" "/README.md" "/DEPLOYMENT.md"; do
+  body="${TMP_DIR}/guard-body"
+  status="$(curl -sS -o "${body}" -w '%{http_code}' --max-time 5 "${BASE_URL}${path}")"
+  if [[ "${status}" != "200" && "${status}" != "404" ]]; then
+    echo "Unexpected HTTP ${status} for source guard path ${path}." >&2
+    exit 1
+  fi
+  if [[ "${status}" == "200" ]] && ! grep -q '<div id="app"></div>' "${body}"; then
+    echo "Source guard path ${path} returned non-SPA content." >&2
+    exit 1
+  fi
+done
 
 echo "CI checks passed."

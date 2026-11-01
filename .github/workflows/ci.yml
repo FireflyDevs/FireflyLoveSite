@@ -39,5 +39,5 @@ jobs:
       - name: TypeScript typecheck
         run: pnpm type-check
 
-      - name: Site and redirect checks
+      - name: Vite build and site checks
         run: bash .github/scripts/ci-check.sh
